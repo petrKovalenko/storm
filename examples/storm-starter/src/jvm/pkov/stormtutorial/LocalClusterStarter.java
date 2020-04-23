@@ -27,8 +27,8 @@ public class LocalClusterStarter {
 			
 			TopologyBuilder builder = new TopologyBuilder();
 	        builder.setSpout("word", new TestWordSpout(), 10);
-	        builder.setBolt("exclaim1", new ExclamationBolt(), 3).shuffleGrouping("word");
-	        builder.setBolt("exclaim2", new ExclamationBolt(), 2).shuffleGrouping("exclaim1");
+	        builder.setBolt("exclaim1", new ExclamationBolt2(), 3).shuffleGrouping("word");
+	        builder.setBolt("exclaim2", new ExclamationBolt2(), 2).shuffleGrouping("exclaim1");
 	        StormTopology st = builder.createTopology();
 	        st.validate();
 	        Config conf = new Config();
@@ -40,6 +40,7 @@ public class LocalClusterStarter {
 	        Thread.sleep(15000);
 	        System.out.println("DEACTIVATIONG TOPOLOGY first");
 	        cluster.deactivate("first");
+	        
 	        cluster.shutdown();
 	        cluster.close();
 		} catch (Exception e) {
